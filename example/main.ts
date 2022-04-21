@@ -1,12 +1,11 @@
-import { initEcharts } from '../src'
-import './style.css'
+import { init } from '../lib'
+import '../src/style.css'
 
 const el = document.createElement('div')
 el.classList.add('echarts')
-el.style.display = 'none'
 document.body.appendChild(el)
 
-const ec = initEcharts(el)
+const ec = init(el)
 ec.setOption({
   xAxis: {
     type: 'category',
@@ -34,10 +33,9 @@ v.setAttribute('control', 'true')
 
 document.body.appendChild(v)
 
-
-setTimeout(() => {
+el.addEventListener('click', () => {
   ec.replay()
   ec.listen('videoAvaliable', (data) => {
     v.src = URL.createObjectURL(data)
   })
-}, 0)
+})

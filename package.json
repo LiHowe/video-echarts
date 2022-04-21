@@ -1,5 +1,5 @@
 {
-  "name": "echarts-enhance",
+  "name": "@ziho/video-echarts",
   "private": true,
   "version": "0.0.1",
   "engines": {
@@ -28,13 +28,13 @@
     "ES6",
     "util"
   ],
-  "homepage": "https://github.com/LiHowe/echarts-enhance",
+  "homepage": "https://github.com/LiHowe/video-echarts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LiHowe/echarts-enhance"
+    "url": "https://github.com/LiHowe/video-echarts"
   },
   "bugs": {
-    "url": "https://github.com/LiHowe/echarts-enhance/issues"
+    "url": "https://github.com/LiHowe/video-echarts/issues"
   },
   "files": [
     "lib"
@@ -47,9 +47,11 @@
     "example": "vite example",
     "test": "jest"
   },
-  "dependencies": {
-    "@ziho/suitcase": "^0.0.6",
+  "peerDependencies": {
     "echarts": "^5.3.2"
+  },
+  "dependencies": {
+    "@ziho/suitcase": "^0.0.6"
   },
   "devDependencies": {
     "typescript": "^4.5.4",

@@ -18,5 +18,5 @@
     "isolatedModules": true,
     "outDir": "./lib"
   },
-  "include": ["src", "example"]
+  "include": ["src"]
 }

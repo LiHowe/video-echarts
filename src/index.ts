@@ -1,4 +1,4 @@
-import { EChartsType, EChartsOption, init } from 'echarts'
+import { EChartsType, EChartsOption, init as pureInit } from 'echarts'
 import enhanceReplay from './enhances/replay'
 import enhanceRecord from './enhances/record'
 
@@ -10,11 +10,11 @@ export interface EnhancedChart extends EChartsType {
   __hooks__: ChartHooks,
   listen: (hook: string, cb: ChartHookCallback) => void
   unListen: (hook: string, cb: ChartHookCallback) => void
-  replay?: () => void
+  replay: () => void
 }
 
-export function initEcharts(el: HTMLElement) {
-  const instance: EnhancedChart = init(el) as EnhancedChart
+export function init(el: HTMLElement) {
+  const instance: EnhancedChart = pureInit(el) as EnhancedChart
   instance.__state__ = {
     isReplaying: false,
     isSettingOption: false,
