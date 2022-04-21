@@ -1,0 +1,58 @@
+{
+  "name": "echarts-enhance",
+  "private": true,
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=12"
+  },
+  "jsdelivr": "lib/index.iife.js",
+  "unpkg": "lib/index.iife.js",
+  "main": "./lib/index.cjs.js",
+  "module": "./lib/index.es.js",
+  "browser": "./lib/index.umd.js",
+  "exports": {
+    ".": {
+      "import": "./lib/index.es.js",
+      "require": "./lib/index.cjs.js",
+      "browser": "./lib/index.umd.js"
+    },
+    "./*": "./*"
+  },
+  "types": "./lib/index.d.ts",
+  "author": "LiHowe <howe.personal@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "echarts",
+    "TypeScript",
+    "JavaScript",
+    "ES6",
+    "util"
+  ],
+  "homepage": "https://github.com/LiHowe/echarts-enhance",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LiHowe/echarts-enhance"
+  },
+  "bugs": {
+    "url": "https://github.com/LiHowe/echarts-enhance/issues"
+  },
+  "files": [
+    "lib"
+  ],
+  "description": "Some feature of echarts.",
+  "scripts": {
+    "dev": "vite",
+    "build": "rm -rf lib && tsc && vite build",
+    "type": "tsc --emitDeclarationOnly",
+    "example": "vite example",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@ziho/suitcase": "^0.0.6",
+    "echarts": "^5.3.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4",
+    "vite": "^2.9.5"
+  }
+}
