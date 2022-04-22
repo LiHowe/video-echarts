@@ -1,6 +1,6 @@
 import { EChartsType, EChartsOption, init as pureInit } from 'echarts'
 import enhanceReplay from './enhances/replay'
-import enhanceRecord from './enhances/record'
+import enhanceRecord, { RecorderOptions } from './enhances/record'
 
 export type ChartHookCallback = (opt?: EChartsOption) => void
 export type ChartHooks = Record<string, ChartHookCallback[]>
@@ -13,8 +13,22 @@ export interface EnhancedChart extends EChartsType {
   replay: () => void
 }
 
-export function init(el: HTMLElement) {
-  const instance: EnhancedChart = pureInit(el) as EnhancedChart
+interface Options {
+  theme?: string | {[key: string]: any}
+  opts?: EChartsInitOpts
+  recordOpts?: RecorderOptions
+}
+
+type EChartsInitOpts = {
+  devicePixelRatio?: number,
+  useDirtyRect?: boolean,
+  width?: number,
+  height?: number
+}
+
+
+export function init(el: HTMLElement, opts: Options) {
+  const instance: EnhancedChart = pureInit(el, opts.theme, opts.opts) as EnhancedChart
   instance.__state__ = {
     isReplaying: false,
     isSettingOption: false,
@@ -24,12 +38,11 @@ export function init(el: HTMLElement) {
   instance.unListen = unListen.bind(null, instance)
 
   enhanceReplay(instance)
-  enhanceRecord(instance)
+  enhanceRecord(instance, opts.recordOpts)
   return instance
 }
 
 function listen (ec: EnhancedChart, hook: string, cb: ChartHookCallback) {
-  console.log(`[EnhancedChart] listen ${hook}`)
   if (!ec.__hooks__[hook]) ec.__hooks__[hook] = []
   ec.__hooks__[hook].push(cb)
 }

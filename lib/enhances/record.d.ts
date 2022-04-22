@@ -1,6 +1,8 @@
 import { EnhancedChart } from '..';
-interface RecorderOptions {
+export interface RecorderOptions {
     framerate?: number;
+    mimeType?: string;
+    recorder?: MediaRecorder;
 }
 declare const _default: (ec: EnhancedChart, opts?: RecorderOptions) => void;
 /**
