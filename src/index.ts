@@ -27,8 +27,9 @@ type EChartsInitOpts = {
 }
 
 
-export function init(el: HTMLElement, opts: Options) {
-  const instance: EnhancedChart = pureInit(el, opts.theme, opts.opts) as EnhancedChart
+export function init(el: HTMLElement, options: Options = {}) {
+  const { theme, opts, recordOpts } = options
+  const instance: EnhancedChart = pureInit(el, theme, opts) as EnhancedChart
   instance.__state__ = {
     isReplaying: false,
     isSettingOption: false,
@@ -38,7 +39,7 @@ export function init(el: HTMLElement, opts: Options) {
   instance.unListen = unListen.bind(null, instance)
 
   enhanceReplay(instance)
-  enhanceRecord(instance, opts.recordOpts)
+  enhanceRecord(instance, recordOpts)
   return instance
 }
 

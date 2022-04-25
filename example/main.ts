@@ -1,11 +1,16 @@
-import { init } from '../lib'
-import '../src/style.css'
+// import { init } from '../lib'
+import { init } from '../src/index'
+import './style.css'
 
 const el = document.createElement('div')
 el.classList.add('echarts')
 document.body.appendChild(el)
 
-const ec = init(el)
+const ec = init(el, {
+  recordOpts: {
+    framerate: 60
+  }
+})
 ec.setOption({
   xAxis: {
     type: 'category',
@@ -35,6 +40,7 @@ document.body.appendChild(v)
 
 el.addEventListener('click', () => {
   ec.replay()
+  URL.revokeObjectURL(v.src)
   ec.listen('videoAvaliable', (data) => {
     v.src = URL.createObjectURL(data)
   })
