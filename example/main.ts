@@ -98,6 +98,7 @@ el.addEventListener('click', () => {
   // })
   ec.listen('capture', (data) => {
     // const fragment = document.createDocumentFragment()
+    debugger
     const res = []
     data.forEach(url => {
       // const img = document.createElement('img')
@@ -121,15 +122,15 @@ el.addEventListener('click', () => {
 })
 
 
-const p = document.createElement('image-player')
-setStyle(p, {
-  width: '200px',
-  height: '200px',
-  display: 'block',
-  border: '1px solid'
-})
-const pcontent = document.createElement('div')
-pcontent.setAttribute('slot', 'content')
-pcontent.innerHTML = '<b> test </b>'
-p.appendChild(pcontent)
-document.body.append(p)
+// const p = document.createElement('image-player')
+// setStyle(p, {
+//   width: '200px',
+//   height: '200px',
+//   display: 'block',
+//   border: '1px solid'
+// })
+// const pcontent = document.createElement('div')
+// pcontent.setAttribute('slot', 'content')
+// pcontent.innerHTML = '<b> test </b>'
+// p.appendChild(pcontent)
+// document.body.append(p)
