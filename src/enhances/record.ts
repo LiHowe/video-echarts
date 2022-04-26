@@ -1,10 +1,13 @@
 import { EnhancedChart } from '..'
-import { runFnWithCatch } from '../util'
+import { invokeFnWithCatch } from '@ziho/suitcase'
 
-export interface RecorderOptions {
-  framerate?: number
+export interface RecorderOptions extends BasicRecordOptions {
   mimeType?: string
   recorder?: MediaRecorder
+}
+
+export interface BasicRecordOptions {
+  framerate?: number
 }
 
 const defaultOptions: RecorderOptions = {
@@ -52,7 +55,7 @@ export default (ec: EnhancedChart, opts: RecorderOptions = defaultOptions) => {
       recorder.ondataavailable = (e: BlobEvent) => {
         const { data } = e
         const cbs = ec.__hooks__['videoAvaliable'] ?? []
-        cbs.forEach(cb => runFnWithCatch(cb, data))
+        cbs.forEach(cb => invokeFnWithCatch(() => cb(data)))
       }
     }
     ec.__state__.isRecording = true

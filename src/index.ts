@@ -1,8 +1,9 @@
-import { EChartsType, EChartsOption, init as pureInit } from 'echarts'
+import { EChartsType, init as pureInit } from 'echarts'
 import enhanceReplay from './enhances/replay'
 import enhanceRecord, { RecorderOptions } from './enhances/record'
+import enhanceCapture from './enhances/capture'
 
-export type ChartHookCallback = (opt?: EChartsOption) => void
+export type ChartHookCallback = (...params: any) => void
 export type ChartHooks = Record<string, ChartHookCallback[]>
 
 export interface EnhancedChart extends EChartsType {
@@ -17,7 +18,10 @@ interface Options {
   theme?: string | {[key: string]: any}
   opts?: EChartsInitOpts
   recordOpts?: RecorderOptions
+  mode?: Mode
 }
+
+type Mode = 'capture' | 'record'
 
 type EChartsInitOpts = {
   devicePixelRatio?: number,
@@ -27,7 +31,9 @@ type EChartsInitOpts = {
 }
 
 
-export function init(el: HTMLElement, options: Options = {}) {
+export function init(el: HTMLElement, options: Options = {
+  mode: 'capture'
+}) {
   const { theme, opts, recordOpts } = options
   const instance: EnhancedChart = pureInit(el, theme, opts) as EnhancedChart
   instance.__state__ = {
@@ -39,7 +45,12 @@ export function init(el: HTMLElement, options: Options = {}) {
   instance.unListen = unListen.bind(null, instance)
 
   enhanceReplay(instance)
-  enhanceRecord(instance, recordOpts)
+
+  ;({
+    record: () => enhanceRecord(instance, recordOpts),
+    capture: () => enhanceCapture(instance, { framerate: recordOpts?.framerate })
+  } as Record<Mode, any>)[options.mode ?? 'capture']()
+
   return instance
 }
 

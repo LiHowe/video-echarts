@@ -1,5 +1,4 @@
-import { range } from '@ziho/suitcase'
-import { runFnWithCatch } from '../util'
+import { range, invokeFnWithCatch } from '@ziho/suitcase'
 import { EnhancedChart } from '..'
 
 /**
@@ -16,7 +15,7 @@ export default (ec: EnhancedChart) => {
     const opt = ec.getOption()
     // run beforeReplay hooks
     console.log('[replay] before replay')
-    beforeReplay.forEach(cb => runFnWithCatch(cb))
+    beforeReplay.forEach(cb => invokeFnWithCatch(cb))
 
     let duration = opt.animationDuration as number ?? 0
     if (opt.animationDuration instanceof Function) {
@@ -38,7 +37,7 @@ export default (ec: EnhancedChart) => {
 
     setTimeout(() => {
       console.log('[replay] after replay, duration is', duration)
-      afterReplay.forEach(cb => runFnWithCatch(cb))
+      afterReplay.forEach(cb => invokeFnWithCatch(cb))
     }, duration)
   }
 }
