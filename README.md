@@ -48,5 +48,9 @@ ec.unlisten('videoAvaliable', videoHandler)
 + [x] `echarts.replay`
   + [x] listener: `beforeReplay`
   + [x] listener: `afterReplay`
+
 + [x] record echarts to video
   + [x] listener: `videoAvaliable`
+
++ [x] mediaRecorder
++ [x] imageCapture
