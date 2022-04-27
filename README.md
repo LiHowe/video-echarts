@@ -33,14 +33,44 @@ ec.listen('afterReplay', () => {
   console.log('after replay')
 })
 
+```
+
++ **record video**
+
+```typescript
+ec.useRecord({ mode: 'record' })
+
 const videoHandler = (data) => {
   console.log('videoAvaliable, data is blob')
 }
 ec.listen('videoAvaliable', videoHandler)
+ec.replay()
 
 // cancel the videoAvaliable listener
 ec.unlisten('videoAvaliable', videoHandler)
+```
 
++ **capture images**
+
+```typescript
+ec.useRecord({ mode: 'capture' })
+ec.listen('capture', (data) => {
+  console.log('capture, data is image base64 array')
+})
+ec.replay()
+
+
+// you also can use ec.on('rendered', () => {}) and ec.on('finished', () => {})
+// to capture more frames of echarts animation
+const imgs = []
+ec.on('rendered', () => {
+  console.log('rendered')
+  imgs.push(ec.getDataURL())
+})
+
+ec.on('finished', () => {
+  console.log('finished', imgs)
+})
 ```
 
 ## Feature

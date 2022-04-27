@@ -4,22 +4,21 @@ import { timer } from '@ziho/suitcase'
 
 export default (ec: EnhancedChart, opts: BasicRecordOptions) => {
   const { framerate = 30 } = opts
-  const imageSequence: string[] = []
+  const imageSequence: Set<string> = new Set()
   let t: any
   ec.listen('beforeReplay', () => {
     t = timer(() => {
-      imageSequence.push(ec.getDataURL({
+      imageSequence.add(ec.getDataURL({
         type: 'png'
       }))
     }, 1000 / framerate)
   })
 
   ec.listen('afterReplay', () => {
-    console.log('[Capture] afterRplay', imageSequence)
     t.cancel()
     const cbs = ec.__hooks__['capture']
-    cbs.forEach(cb => cb(imageSequence))
-    imageSequence.length = 0
+    cbs.forEach(cb => cb(Array.from(imageSequence)))
+    imageSequence.clear()
   })
 
 }
